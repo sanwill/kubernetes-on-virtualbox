@@ -8,7 +8,7 @@ The VM OS will use Ubuntu-server 18.04 LTS.
 
 ## Preparation
 * Install VirtualBOx on PC/Mac
-* Create host-only network on VirtualBox, for example: **vboxnet0** use IPv4 network address 192.168.70.1 and subnet 24
+* Create host-only network on VirtualBox, for example: **vboxnet0** use IPv4 network address 192.168.70.0 (GW address: 192.168.70.1) and subnet 24 (Netmask: 255.255.255.0)
 * Create **3 VMs** with 2 vCPU, 4096GB RAM each (for lower spec system, you can cut the spec to half), 100GB storage. This VM will be named as:
   * master-node
   * worker01-node
