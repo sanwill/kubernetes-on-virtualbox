@@ -100,7 +100,7 @@ The installation consist of 3 parts which need to be run on **all nodes, master 
 
 Once you finished those 3 steps, the kubelet will restarting every few seconds, as it waits in a crashloop for kubeadm to tell it what to do. Next step will be to initiate cluster using kubeadm.
 
-I have created a simple shell to automate the steps, no validation check etc. See k8s_install_ubuntu_allnodes.sh
+I have created a simple shell to automate the steps, no validation check etc. See [k8s_install_ubuntu_allnodes.sh](scripts/k8s_install_ubuntu_allnodes.sh).  
 This script uses Docker Engine as container runtime.  
 To execute the script, copy the script to all nodes and execute using sudo:
 ```console
