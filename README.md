@@ -1,7 +1,7 @@
-# Install Kubernetes on Virtualbox
+# Install Kubernetes on VirtualBox VMs
 
 ## Overview
-This following steps cover the steps required to create a Kubernetes Lab on VirtualBox VM.
+This following steps cover the steps required to create a Kubernetes Lab on VirtualBox VMs.
 The steps to install VirtualBox, detail steps on how to create the VirtualBox VM and Guest OS installation are not covered.
 The VM OS will use Ubuntu-server 18.04 LTS.  
 
@@ -9,12 +9,16 @@ The VM OS will use Ubuntu-server 18.04 LTS.
 ## Preparation
 * Install VirtualBOx on PC/Mac
 * Create host-only network on VirtualBox, for example: **vboxnet0** use IPv4 network address 192.168.70.1 and subnet 24
-* Create 3 VMs with 2 vCPU, 4096GB RAM each (for lower spec system, you can cut the spec to half), 100GB storage. This VM will be named as master-node, worker01-node and worker02-node.
+* Create **3 VMs** with 2 vCPU, 4096GB RAM each (for lower spec system, you can cut the spec to half), 100GB storage. This VM will be named as:
+  * master-node
+  * worker01-node
+  * worker02-node.
 * Attach 2 network interfaces on every VM:
   * NIC #1 usses bridge adapter, will be used for external connectivity
   * NIC #2 usses host-only  **vboxnet0**, will be used for internal connectivity
-* Attach the Ubuntu-server ISO to each VM
-* Reference: [Setup VM](https://docs.oracle.com/cd/E26217_01/E26796/html/qs-create-vm.html)
+* Attach the Ubuntu-server ISO to each VM  
+  
+Reference: [Setup VM](https://docs.oracle.com/cd/E26217_01/E26796/html/qs-create-vm.html)
 
 # Install OS
 ## OS Installation
@@ -25,7 +29,8 @@ Boot the VM to Ubuntu-server ISO
 * Do not add any additonal packages
 * Let the rest to default
 
-Proceed with Ubuntu-server OS installation.
+Proceed with Ubuntu-server OS installation.  
+  
 Reference: [Ubuntu installation](https://ubuntu.com/tutorials/install-ubuntu-server#1-overview)
 
 ## Post OS Installation
