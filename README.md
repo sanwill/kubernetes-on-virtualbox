@@ -9,12 +9,12 @@ The VM OS will use Ubuntu-server 18.04 LTS.
 ## Preparation
 * Install VirtualBOx on PC/Mac
 * Create host-only network on VirtualBox, for example: **vboxnet0** use IPv4 network address 192.168.70.0 (GW address: 192.168.70.1) and subnet 24 (Netmask: 255.255.255.0)
-* Create **3 VMs** with 2 vCPU, 4096GB RAM each (for lower spec system, you can cut the spec to half), 100GB storage. This VM will be named as:
+* Create **3 VMs** with 2 vCPU, 4096GB RAM each (for lower spec system, you can cut the spec to half), 100GB storage. These VMs will be named as:
   * master-node
   * worker01-node
   * worker02-node.
 * Attach 2 network interfaces on every VM:
-  * NIC #1 usses bridge adapter, will be used for external connectivity
+  * NIC #1 usses bridge adapter, will be used for external connectivity. In this instruction, it is assumed that the external network is using network adress: 192.168.0.0/24. Where master-node will have static IP 192.168.0.10, worker01 will use 192.168.0.11 and worker02 will use 192.168.0.12.
   * NIC #2 usses host-only  **vboxnet0**, will be used for internal connectivity
 * Attach the Ubuntu-server ISO to each VM  
   
@@ -69,10 +69,11 @@ network:
 ```  
 
 **Note:**  
-enp0s3 is NIC #1 the interface toward the bridge adapter  
-enp0s8 is NIC #2 the interface toward the host-only network vboxnet0  
-The external network is 192.168.0.0/24 and the static IP for external communication for this VM is 192.168.0.10  
-The internal network is 192.168.70.0/24 and the static IP for internal communication for this VM is 192.168.70.3  
+Change the addresses as per your network plan.  
+enp0s3 is NIC #1 the interface toward the bridge adapter.  
+enp0s8 is NIC #2 the interface toward the host-only network vboxnet0.  
+The external network is 192.168.0.0/24 and the static IP for external communication for this VM is 192.168.0.10.  
+The internal network is 192.168.70.0/24 and the static IP for internal communication for this VM is 192.168.70.3.  
 
 Next, apply the static IP configuration
 ```console
@@ -95,7 +96,7 @@ $ sudo ip r delete default via 192.168.70.1 dev enp0s8 proto static
 
 # Kubernetes Cluster Installation
 ## Installing kubeadm 
-We will follow the steps in [Installing kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/) from [kubernetes.io documentation](https://kubernetes.io/docs/home/).
+We will follow the steps in [Installing kubeadm page](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/) from [kubernetes.io documentation](https://kubernetes.io/docs/home/).
 
 The installation consist of 3 parts which need to be run on **all nodes, master and worker nodes**.
 * [Iptables setup](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#letting-iptables-see-bridged-traffic)
@@ -105,7 +106,7 @@ The installation consist of 3 parts which need to be run on **all nodes, master 
 
 Once you finished those 3 steps, the kubelet will restarting every few seconds, as it waits in a crashloop for kubeadm to tell it what to do. Next step will be to initiate cluster using kubeadm.
 
-I have created a simple shell to automate the steps, no validation check etc. See [k8s_install_ubuntu_allnodes.sh](scripts/k8s_install_ubuntu_allnodes.sh).  
+I have created a simple shell script to automate the steps, no validation check etc. See [k8s_install_ubuntu_allnodes.sh](scripts/k8s_install_ubuntu_allnodes.sh).  
 This script uses Docker Engine as container runtime.  
 To execute the script, copy the script to all nodes and execute using sudo:
 ```console
