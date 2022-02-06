@@ -45,6 +45,8 @@ For example
 ```console
 sudo hostnamectl set-hostname master-node
 ```
+Note:
+**If you have setup the hostname during installation, you may skip the above step**
 
 * Configure static IP address
 ```console
@@ -93,7 +95,7 @@ default via 192.168.70.1 dev enp0s8 proto static <--- not needed, remove it
 $ sudo ip r delete default via 192.168.70.1 dev enp0s8 proto static
 ```
 * Login to VM using its IP and credential to test if SSH connection work.
-* Repeat the steps to all VM.
+* Repeat the steps to all VM but change the hostname and the IP addresses.
 
 # Kubernetes Cluster Installation
 ## Installing kubeadm 
