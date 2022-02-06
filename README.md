@@ -152,7 +152,7 @@ kubeadm join 192.168.70.3:6443 --token ul3z4n.znd6xxxxxxxxxxxx \
 ```
 **Note**  
 10.211.0.0/16 is the POD network CIDR. You can select whichever network address that fit your requirement.  
-192.168.70.3 is the host-only vboxnet0 network  
+192.168.70.3 is the IP address of master node running on host-only vboxnet0 network. This IP was set at [post-installation step](https://github.com/sanwill/kubernetes-on-virtualbox/edit/main/README.md#post-os-installation).
 
 
 * Copy the config Kube directory/file.  
