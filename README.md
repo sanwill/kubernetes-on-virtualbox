@@ -94,9 +94,33 @@ default via 192.168.70.1 dev enp0s8 proto static <--- not needed, remove it
 
 $ sudo ip r delete default via 192.168.70.1 dev enp0s8 proto static
 ```
+
+Add this following service to remove the duplicated default route after reboot.
+
+```console
+sudo cat <<EOF | sudo tee /etc/systemd/system/cleanup-double-route.service
+[Unit]
+Description=Custom script, remove double default route on Ubuntu
+
+[Service]
+User=root
+ExecStart=/bin/bash -c "ip route delete default via 192.168.70.1 dev enp0s8 proto static"
+
+[Install]
+WantedBy=multi-user.target
+EOF
+```
+
+Start and enable the service.
+```console
+sudo systemctl daemon-reload
+sudo systemctl restart cleanup-double-route.service
+sudo systemctl enable cleanup-double-route.service
+```
+
 * Login to VM using its IP and credential to test if SSH connection work.
 * Repeat the steps to all VM but change the hostname and the IP addresses.
-
+  
 # Kubernetes Cluster Installation
 ## Installing kubeadm 
 We will follow the steps in [Installing kubeadm page](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/) from [kubernetes.io documentation](https://kubernetes.io/docs/home/).
