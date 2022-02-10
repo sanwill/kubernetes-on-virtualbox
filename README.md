@@ -37,20 +37,20 @@ Reference: [Ubuntu installation](https://ubuntu.com/tutorials/install-ubuntu-ser
 ## Post OS Installation
 Once the installation is finished login to each VM console using the user name and password created earlier.
 * Configure the hostname:
-```console
-sudo hostnamectl set-hostname <hostname>
+```
+# sudo hostnamectl set-hostname <hostname>
 ```
 For example
 
-```console
-sudo hostnamectl set-hostname master-node
+```
+# sudo hostnamectl set-hostname master-node
 ```
 Note:
 **If you have setup the hostname during installation, you may skip the above step**
 
 * Configure static IP address
-```console
-vi /etc/netplan/01-netcfg.yaml
+```
+# vi /etc/netplan/01-netcfg.yaml
 ```
 ```shell
 network:
@@ -79,26 +79,26 @@ The external network is 192.168.0.0/24 and the static IP for external communicat
 The internal network is 192.168.70.0/24 and the static IP for internal communication for this VM is 192.168.70.3.  
 
 Next, apply the static IP configuration
-```console
-sudo netplan apply
+```
+# sudo netplan apply
 ```
 
 Ensure that there is only 1 default route on VM. If there is any additionaly default route, remove the wrong default route.
 For example:
-```console
-$ ip r
+```
+# ip r
 default via 192.168.0.1 dev enp0s3 proto static
 default via 192.168.70.1 dev enp0s8 proto static <--- not needed, remove it
 ...
 ...
 
-$ sudo ip r delete default via 192.168.70.1 dev enp0s8 proto static
+# sudo ip r delete default via 192.168.70.1 dev enp0s8 proto static
 ```
 
 Add this following service to remove the duplicated default route after reboot.
 
-```console
-sudo cat <<EOF | sudo tee /etc/systemd/system/cleanup-double-route.service
+```
+# sudo cat <<EOF | sudo tee /etc/systemd/system/cleanup-double-route.service
 [Unit]
 Description=Custom script, remove double default route on Ubuntu
 
@@ -112,10 +112,10 @@ EOF
 ```
 
 Start and enable the service.
-```console
-sudo systemctl daemon-reload
-sudo systemctl restart cleanup-double-route.service
-sudo systemctl enable cleanup-double-route.service
+```
+# sudo system4ctl daemon-reload
+# sudo systemctl restart cleanup-double-route.service
+# sudo systemctl enable cleanup-double-route.service
 ```
 
 * Login to VM using its IP and credential to test if SSH connection work.
@@ -136,19 +136,19 @@ Once you finished those 3 steps, the kubelet will restarting every few seconds, 
 I have created a simple shell script to automate the steps, no validation check etc. See [k8s_install_ubuntu_allnodes.sh](scripts/k8s_install_ubuntu_allnodes.sh).  
 This script uses Docker Engine as container runtime.  
 To execute the script, copy the script to all nodes and execute using sudo:
-```console
-sudo sh k8s_install_ubuntu_allnodes.sh
+```
+# sudo sh k8s_install_ubuntu_allnodes.sh
 ```
 
 ## Initializing Control-plane/Master Node
 We will follow instructions in [Creating a cluster with kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/) to intiate master node.  
 
 * Execute kubeadm init command on master node as root user and note down the "kubeadm join" command in the output file
-```console
-sudo kubeadm init --pod-network-cidr 10.211.0.0/16 --apiserver-advertise-address=192.168.70.3
+```
+# sudo kubeadm init --pod-network-cidr 10.211.0.0/16 --apiserver-advertise-address=192.168.70.3
 ```
 Output:  
-```shell
+```
 [init] Using Kubernetes version: v1.23.3
 ...
 ...
@@ -180,55 +180,55 @@ kubeadm join 192.168.70.3:6443 --token ul3z4n.znd6xxxxxxxxxxxx \
 
 
 * Copy the config Kube directory/file.  
-```console
-mkdir -p $HOME/.kube;   sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config;   sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
+# mkdir -p $HOME/.kube;   sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config;   sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
 * Next, install the Weave network CNI so that the created POD can use POD network.
-```console
-kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+```
+# kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
 ```
 
 * Install etcdctl-client package.  
-```console
-sudo install etcd-client -y
+```
+# sudo install etcd-client -y
 ````
 
 ## Join the worker node to Control-plane/Master Node
 SSH to each worker node and run the join command:
 
-```console
-kubeadm join 192.168.70.3:6443 --token ul3z4n.znd6xxxxxxxxxxxx \
+```
+# kubeadm join 192.168.70.3:6443 --token ul3z4n.znd6xxxxxxxxxxxx \
         --discovery-token-ca-cert-hash sha256:xxxxxxxxxd6fde0f1e27e5bbb3d873f316a7d065fb5fe57517xxxxxxxxxxxxxxx)
 ```
 
 
 **Note:**  
 The join command was printed out at the kubeadm init output.  If you missed or loss the session, you can ask kubeadm to reprint the join command by running this command on master node:
-```console
-kubeadm token create --print-join-command
+```
+# kubeadm token create --print-join-command
 ```
 
 # Verify The Kubernetes Cluster
 Login to master node.
 Execute these following commands.
 
-```console
-kubectl get nodes
+```
+# kubectl get nodes
 ```
 Expected output: all nodes are in **Ready** state
 
-```console
-kubectl get pod -n kube-sytem
+```
+# kubectl get pod -n kube-sytem
 ```
 Expected output: all kube-system pods are in **Running** state
 
 Create a test pod, for example:
-```console
-$ kubectl run nginx --image=nginx
+```
+# kubectl run nginx --image=nginx
 pod/nginx created
 
-$ kubectl get pod nginx
+# kubectl get pod nginx
 NAME    READY   STATUS    RESTARTS   AGE
 nginx   1/1     Running   0          37s
 ```
