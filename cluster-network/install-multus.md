@@ -1,4 +1,4 @@
-# Install Multus
+# Install Multus CNI
 
 Reference: [Multus quick start](https://github.com/k8snetworkplumbingwg/multus-cni/blob/master/docs/quickstart.md)
 
