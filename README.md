@@ -183,16 +183,25 @@ kubeadm join 192.168.70.3:6443 --token ul3z4n.znd6xxxxxxxxxxxx \
 ```
 # mkdir -p $HOME/.kube;   sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config;   sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
+* Install etcdctl-client package.  
+```
+# sudo install etcd-client -y
+````
+
+## Install Network CNI
 
 * Next, install the Weave network CNI so that the created POD can use POD network.
 ```
 # kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
 ```
 
-* Install etcdctl-client package.  
-```
-# sudo install etcd-client -y
-````
+Note:  
+* You can opt to install different network CNI. See [Cluster Networking](https://kubernetes.io/docs/concepts/cluster-administration/networking/) for more details. 
+* At [cluster-network page](https://github.com/sanwill/kubernetes-on-virtualbox/tree/main/cluster-network), I shared steps to install calico and multus CNI.  
+  * If you wish to [install Calico CNI](https://github.com/sanwill/kubernetes-on-virtualbox/blob/main/cluster-network/install-calico.md) instead of weave CNI.
+  * If you wish to [install Multus CNI](https://github.com/sanwill/kubernetes-on-virtualbox/blob/main/cluster-network/install-multus.md) to enable multiple interface on the POD.
+
+
 
 ## Join the worker node to Control-plane/Master Node
 SSH to each worker node and run the join command:
