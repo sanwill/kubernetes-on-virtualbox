@@ -1,6 +1,8 @@
 # Install Calico CNI
 Reference: [Calico quick start](https://projectcalico.docs.tigera.io/getting-started/kubernetes/quickstart)
 
+Run following commands on master node.
+
 * Install the Tigera Calico operator and custom resource definitions/CRD.
 ```
 # mkdir ~/calico
@@ -80,7 +82,9 @@ calico-node-fprb6                          1/1     Running   0          2m12s
 calico-typha-77b7886f75-t5v52              1/1     Running   0          2m12s
 
 ```
-At this point you can add the remaining nodes to master.For example:
+
+# Join the worker nodes to cluster 
+At this point you can add the remaining nodes to master if it is not yet done.For example:
 
 * Run on master:
 ```
