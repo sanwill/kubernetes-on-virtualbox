@@ -8,7 +8,7 @@ The VM OS will use Ubuntu-server 18.04 LTS.
 
 
 ## Preparation
-* Install VirtualBOx on PC/Mac
+* Install VirtualBox on PC/Mac
 * Create host-only network on VirtualBox, for example: **vboxnet0** use IPv4 network address 192.168.70.0 (GW address: 192.168.70.1) and subnet 24 (Netmask: 255.255.255.0)
 * Create **3 VMs** with 2 vCPU, 4096GB RAM each (for lower spec system, you can cut the spec to half), 100GB storage. These VMs will be named as:
   * master-node
@@ -16,6 +16,8 @@ The VM OS will use Ubuntu-server 18.04 LTS.
   * worker02-node.
 * Attach 2 network interfaces on every VM:
   * NIC #1 usses bridge adapter, will be used for external connectivity. In this instruction, it is assumed that the external network is using network adress: 192.168.0.0/24. Where master-node will have static IP 192.168.0.10, worker01 will use 192.168.0.11 and worker02 will use 192.168.0.12.
+**Note: **You may opt to NAT and VirtualBox port forwarding feature to connect to SSH to the VM
+
   * NIC #2 usses host-only  **vboxnet0**, will be used for internal connectivity
 * Attach the Ubuntu-server ISO to each VM  
   
