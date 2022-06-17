@@ -16,7 +16,8 @@ The VM OS will use Ubuntu-server 18.04 LTS.
   * worker02-node.
 * Attach 2 network interfaces on every VM:
   * NIC #1 usses bridge adapter, will be used for external connectivity. In this instruction, it is assumed that the external network is using network adress: 192.168.0.0/24. Where master-node will have static IP 192.168.0.10, worker01 will use 192.168.0.11 and worker02 will use 192.168.0.12.
-**Note: **You may opt to NAT and VirtualBox port forwarding feature to connect to SSH to the VM
+  
+**Note:** You may opt to NAT and VirtualBox port forwarding feature to SSH to the VM.
 
   * NIC #2 usses host-only  **vboxnet0**, will be used for internal connectivity
 * Attach the Ubuntu-server ISO to each VM  
