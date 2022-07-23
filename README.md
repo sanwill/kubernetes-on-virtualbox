@@ -121,6 +121,11 @@ Start and enable the service.
 # sudo systemctl enable cleanup-double-route.service
 ```
 
+Note:
+
+If you have ansible installed, you can use the [add-cleanup-double-route.yaml](https://github.com/sanwill/kubernetes-on-virtualbox/blob/main/scripts/add-cleanup-double-route.yaml) to create cleanup-double-route.service.
+
+
 * Login to VM using its IP and credential to test if SSH connection work.
 * Repeat the steps to all VM but change the hostname and the IP addresses.
   
