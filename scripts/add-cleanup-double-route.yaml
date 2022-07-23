@@ -1,0 +1,31 @@
+- hosts: master, worker01, worker02
+  gather_facts: no
+  become: true
+  user: username #change to username and run the playbook with option --extra-vars "ansible_become_password=<sudo passwd>"
+  tasks:
+  - name: Create cleanup-double-route.service
+    copy:
+      dest: "/etc/systemd/system/cleanup-double-route.service"
+      content: |
+        [Unit]
+        Description=Custom script, remove double default route on Ubuntu
+
+        [Service]
+        User=root
+        ExecStart=/bin/bash -c "ip route delete default via 192.168.70.1 dev enp0s8 proto static"
+
+        [Install]
+        WantedBy=multi-user.target
+        
+  - name: Reload systemd
+    systemd:
+      daemon_reload: yes
+  - name: Reload systemd
+    systemd:
+      name: cleanup-double-route
+      state: started
+  - name: Enable cleanup-double-route
+    systemd:
+      name: cleanup-double-route
+      enabled: yes
+      masked: no
