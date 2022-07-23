@@ -120,15 +120,15 @@ Start and enable the service.
 # sudo systemctl restart cleanup-double-route.service
 # sudo systemctl enable cleanup-double-route.service
 ```
+Next,
+
+* Login to VM using its IP and credential to test if SSH connection work.
+* Repeat the steps to all VM but change the hostname and the IP addresses.
 
 Note:
 
 If you have ansible installed, you can use the [add-cleanup-double-route.yaml](https://github.com/sanwill/kubernetes-on-virtualbox/blob/main/scripts/add-cleanup-double-route.yaml) to create cleanup-double-route.service.
 
-
-* Login to VM using its IP and credential to test if SSH connection work.
-* Repeat the steps to all VM but change the hostname and the IP addresses.
-  
 # Kubernetes Cluster Installation
 ## Installing kubeadm 
 We will follow the steps in [Installing kubeadm page](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/) from [kubernetes.io documentation](https://kubernetes.io/docs/home/).
