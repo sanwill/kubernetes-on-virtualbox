@@ -136,13 +136,13 @@ We will follow the steps in [Installing kubeadm page](https://kubernetes.io/docs
 The installation consist of 3 parts which need to be run on **all nodes, master and worker nodes**.
 * [Iptables setup](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#letting-iptables-see-bridged-traffic)
 * [Install CRI/Container Runtime](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-runtime)
-  * This is to install container SW such as Docker Engine, containerd etc
+  * This is to install Container Runtimes such as containerd, cri-o etc
 * [Installing kubeadm, kubelet and kubectl](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl)
 
 Once you finished those 3 steps, the kubelet will restarting every few seconds, as it waits in a crashloop for kubeadm to tell it what to do. Next step will be to initiate cluster using kubeadm.
 
 I have created a simple shell script to automate the steps, no validation check etc. See [k8s_install_ubuntu_allnodes.sh](scripts/k8s_install_ubuntu_allnodes.sh).  
-This script uses Docker Engine as container runtime.  
+This script uses containerd as container runtime.  
 To execute the script, copy the script to all nodes and execute using sudo:
 ```
 # sudo sh k8s_install_ubuntu_allnodes.sh
