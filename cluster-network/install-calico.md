@@ -71,17 +71,23 @@ apiserver.operator.tigera.io/default created
 
 ```
 
-Confirm that all of the pods are running with the following command.
+Monitor the POD status with the following command.
 ```
 # watch kubectl get pods -n calico-system
 ...
 ...
-NAME                                       READY   STATUS    RESTARTS   AGE
-calico-kube-controllers-77c48f5f64-csl2v   1/1     Running   0          2m12s
-calico-node-fprb6                          1/1     Running   0          2m12s
-calico-typha-77b7886f75-t5v52              1/1     Running   0          2m12s
+NAME                                      READY   STATUS    RESTARTS        AGE
+calico-kube-controllers-657d56796-khhwc   0/1     Pending   0               3m54s
+calico-node-cldqn                         1/1     Running   1 (2m52s ago)   3m54s
+calico-typha-7fc44b455-8wlfr              1/1     Running   0               3m54s
 
 ```
+The calico-kube-controllers POD remain in Pending state until first worker join the cluster.
+This following warning is shown on the POD:
+```
+Warning  FailedScheduling  91s   default-scheduler  0/1 nodes are available: 1 node(s) had untolerated taint {node-role.kubernetes.io/control-plane: }. preemption: 0/1 nodes are available: 1 Preemption is not helpful for scheduling.
+```
+
 
 # Join the worker nodes to cluster 
 At this point you can add the remaining nodes to master if it is not yet done.For example:
