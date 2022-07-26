@@ -1,8 +1,4 @@
 #!/bin/bash
-#Updated 24-07-2022
-
-#!/bin/bash
-#Updated 24-07-2022
 
 echo -e "\n###############" 
 echo      "Set OS - Ubuntu"
