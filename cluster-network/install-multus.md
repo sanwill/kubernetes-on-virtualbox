@@ -72,7 +72,7 @@ spec:
   config: '{
       "cniVersion": "0.3.1",
       "type": "macvlan",
-      "master": "enp0s9",
+      "master": "enp0s8",
       "mode": "bridge",
       "ipam": {
         "type": "host-local",
@@ -89,7 +89,7 @@ EOF
 ```
 
 **Note:**  
-* ```"master": "enp0s9"``` - Interface name on the hosts in your cluster to handle the traffic.
+* ```"master": "enp0s8"``` - Interface name on the hosts to handle the POD traffic.
 * ```"cniVersion": "0.3.1"``` - Multus CNI version.
 See:
 ```
