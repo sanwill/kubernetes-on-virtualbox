@@ -1,0 +1,75 @@
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: macvlan-conf
+spec:
+  config: '{
+    "cniVersion": "0.3.1",
+    "name": "macvlan-conf",
+    "plugins": [
+      {
+        "type": "macvlan",
+        "master": "enp0s3",
+        "ipam": {
+          "type": "static"
+        }
+      },
+      {
+        "type": "sbr"
+      }
+    ]
+  }'
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: w1pod3
+  annotations:
+    k8s.v1.cni.cncf.io/networks: '[
+          {
+            "name": "macvlan-conf",
+     "ips": [
+          "192.168.0.194/24"
+     ]
+          }
+        ]'    
+spec:
+  nodeName: kb-cl07-worker01
+  containers:
+  - name: w1pod3
+    command: ["/bin/ash", "-c", "trap : TERM INT; sleep infinity & wait"]
+    image: alpine
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: w2pod4
+  annotations:
+    k8s.v1.cni.cncf.io/networks: '[
+          {
+            "name": "macvlan-conf",
+     "ips": [
+          "192.168.0.195/24"
+     ]
+          }
+        ]'    
+spec:
+  nodeName: kb-cl07-worker02
+  containers:
+  - name: w2pod4
+    command: ["/bin/ash", "-c", "trap : TERM INT; sleep infinity & wait"]
+    image: alpine
+
+
+
+#kubectl apply -f multus_nad_sbr_noip.yaml; sleep 5; kubectl apply -f pod3.yaml 
+#kubectl get pod; kubectl exec -it w1pod3 -- ifconfig net1 | head -2;kubectl exec -it w2pod4 -- ifconfig net1 | head -2
+#kubectl exec -it w1pod3 -- ping -c 2 192.168.0.1
+#kubectl exec -it w1pod3 -- ping -c 2 192.168.0.195
+#kubectl exec -it w2pod4 -- ping -c 2 192.168.0.1
+#kubectl exec -it w2pod4 -- ping -c 2 192.168.0.194
+
+
+
+
+
