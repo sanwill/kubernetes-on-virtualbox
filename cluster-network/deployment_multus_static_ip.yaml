@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-w1pod5
+  labels:
+    app: deploy-w1pod5     
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deploy-w1pod5     
+  template:
+    metadata:
+      labels:
+        app: deploy-w1pod5
+      annotations:
+        k8s.v1.cni.cncf.io/networks: '[
+          {"name": "macvlan-conf", "ips": ["192.168.0.196/24"], "interface": "mh0"}
+          ]'
+    spec:
+      nodeName: kb-cl07-worker01
+      containers:
+      - name: deploy-w1pod5
+        command: ["/bin/ash", "-c", "trap : TERM INT; sleep infinity & wait"]
+        image: alpine
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-w2pod6
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deploy-w1pod5     
+  template:
+    metadata:
+      labels:
+        app: deploy-w1pod5    
+      annotations:
+        k8s.v1.cni.cncf.io/networks: '[
+          {"name": "macvlan-conf", "ips": ["192.168.0.197/24"], "interface": "mh0"}
+          ]'
+    spec:
+      nodeName: kb-cl07-worker02    
+      containers:
+      - name: deploy-w2pod6
+        command: ["/bin/ash", "-c", "trap : TERM INT; sleep infinity & wait"]
+        image: alpine
+
+
+#for i in `kubectl get pod | grep deploy-w | awk '{print $1}'`; do echo $i; kubectl exec -it $i -- ifconfig net1 | head -2; echo; done
+#cmd="ping -c 2 192.168.0.1";for i in `kubectl get pod | grep deploy-w | awk '{print $1}'`; do echo $i; kubectl exec -it $i -- $cmd; echo; done
+
+#kubectl delete deployment deploy-w1pod5; kubectl delete deployment deploy-w2pod6
+
