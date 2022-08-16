@@ -50,9 +50,3 @@ spec:
         command: ["/bin/ash", "-c", "trap : TERM INT; sleep infinity & wait"]
         image: alpine
 
-
-#for i in `kubectl get pod | grep deploy-w | awk '{print $1}'`; do echo $i; kubectl exec -it $i -- ifconfig net1 | head -2; echo; done
-#cmd="ping -c 2 192.168.0.1";for i in `kubectl get pod | grep deploy-w | awk '{print $1}'`; do echo $i; kubectl exec -it $i -- $cmd; echo; done
-
-#kubectl delete deployment deploy-w1pod5; kubectl delete deployment deploy-w2pod6
-
