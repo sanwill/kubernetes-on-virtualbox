@@ -232,3 +232,13 @@ The IP addresses are part of IP range we configured on NetworkAttachmentDefiniti
 
 At the above ```macvlan-conf``` configuration, I added new host-only network (192.168.64.0/24) on VirtualBox and add 3rd adapter (appear as enp0s9 in Ubuntu) on all VirtualBox VMs. However, you may use existing [enp0s8](https://github.com/sanwill/kubernetes-on-virtualbox/edit/main/README.md#preparation) and use cidr 192.168.70.0/24 with certain address range (e.g. 192.168.70.100-192.168.70.150)
 
+# Other Sample
+
+* Multus with static IP PODs
+
+[Sample](https://github.com/sanwill/kubernetes-on-virtualbox/blob/main/cluster-network/multus_test.yaml)
+
+
+* Multus with Deployment
+
+[Sample]((https://github.com/sanwill/kubernetes-on-virtualbox/blob/main/cluster-network/deployment_multus_static_ip.yaml)
