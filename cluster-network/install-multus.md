@@ -241,4 +241,4 @@ At the above ```macvlan-conf``` configuration, I added new host-only network (19
 
 * Multus with Deployment
 
-[Sample]((https://github.com/sanwill/kubernetes-on-virtualbox/blob/main/cluster-network/deployment_multus_static_ip.yaml)
+[Sample](https://github.com/sanwill/kubernetes-on-virtualbox/blob/main/cluster-network/deployment_multus_static_ip.yaml)
